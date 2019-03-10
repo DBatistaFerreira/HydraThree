@@ -14,10 +14,19 @@ public class PriorityQueueDriver {
 	
 	public void run() {
 		
-		//Breaks the Invariant of the BoundedPriorityQueue 
-		BoundedPriorityQueue<Integer> priorityQueue = new BoundedPriorityQueue<>(-5);
+		BoundedPriorityQueue<Integer> priorityQueue = new BoundedPriorityQueue<>(5);
+		priorityQueue.insert(10);
+		priorityQueue.insert(5);
+		priorityQueue.insert(25);
 		
-		//Runs fine
-		BoundedPriorityQueue<Integer> priorityQueueTwo = new BoundedPriorityQueue<>(10);	
+		BoundedPriorityQueue<String> priorityQueueStrings = new BoundedPriorityQueue<>(10);
+		priorityQueueStrings.insert("HelloWorld");
+		priorityQueueStrings.insert("HelloWorldWorld");
+		priorityQueueStrings.insert("Hello");
+		
+		System.out.print(priorityQueue.min());
+		System.out.print(priorityQueueStrings.min());
+		
+		
 	}
 }
