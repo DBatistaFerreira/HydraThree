@@ -2,47 +2,51 @@ import be.ac.ua.ansymo.adbc.annotations.ensures;
 import be.ac.ua.ansymo.adbc.annotations.invariant;
 import be.ac.ua.ansymo.adbc.annotations.requires;
 
-import java.util.Arrays;
-
 @invariant({"$this.sizeOfHeap >= 0",
 			"$this.boundCapacity > 0",
-			"$this.heapArray != null"})
-public class BoundedPriorityQueue<T extends Comparable<T>>{
+			"$this.sizeOfHeap <= $this.boundCapacity"})
+public class BoundedPriorityQueue<T>{
 	
 	public int sizeOfHeap;
 	public int boundCapacity;
 	
-	public T[] heapArray;
+	public Node<T>[] heapArray;
 	
+	@SuppressWarnings("unchecked")
 	@requires({"true"})
-	@ensures({"true"})
+	@ensures({"$this.heapArray != null",
+		      "$this.boundCapacity > 0"})
 	public BoundedPriorityQueue() {
 		this.boundCapacity = 10;
-		this.heapArray = (T[])new Comparable[this.boundCapacity];
+		this.heapArray = new Node[this.boundCapacity+1];
 		this.sizeOfHeap = 0;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@requires({"boundCapacity > 0"})
-	@ensures({"true"})
+	@ensures({"$this.heapArray != null",
+    		  "$this.boundCapacity > 0"})
 	public BoundedPriorityQueue(int boundCapacity) {
 		this.boundCapacity = boundCapacity;
-		this.heapArray = (T[])new Comparable[this.boundCapacity];
+		this.heapArray = new Node[this.boundCapacity+1];
 		this.sizeOfHeap = 0;
 	}
-	
-	@requires({"true"})
-	@ensures({"true"})
-	public void insert(T newItem) {
-		//gotta check bound capacity
-		
+
+	@requires({"newItem != null",
+			   "key != null",
+			   "$this.sizeOfHeap < $this.boundCapacity"})
+	@ensures({"$this.sizeOfHeap == $old($this.sizeOfHeap) + 1",
+		      "$this.contains(newItem)"})
+	public void insert(T newItem, Integer key) {
 		this.sizeOfHeap++;
-		heapArray[sizeOfHeap] = newItem;
-		
+		heapArray[sizeOfHeap] = new Node<>(newItem, key);
 		heapifyUp();
 	}
 	
-	@requires({"true"})
-	@ensures({"true"})
+	@requires({"$this.sizeOfHeap != 0"})
+	@ensures({"$result != null",
+		      "$result == $old($this.min())",
+			  "$this.sizeOfHeap == $old($this.sizeOfHeap) - 1"})
 	public T remove() {
 		T highestPriority = min();
 		
@@ -55,18 +59,23 @@ public class BoundedPriorityQueue<T extends Comparable<T>>{
 		return highestPriority; 
 	}
 	
-	@requires({"true"})
-	@ensures({"true"})
+	@requires({"$this.sizeOfHeap != 0"})
+	@ensures({"$result != null",
+		      "$this.sizeOfHeap == $old($this.sizeOfHeap)",
+		      "$result == $old($this.min())"})
 	public T min() {
-		return heapArray[1];
+		return heapArray[1].getElement();
 	}
 	
-	public boolean isEmpty() {
-		return (sizeOfHeap == 0);
-	}
-	
-	public String toString() {
-		return Arrays.toString(heapArray);
+	@requires({"element != null"})
+	@ensures({"$result == $old($this.contains(element))"})
+	public boolean contains(T element) {
+		for (int i = 1; i <= sizeOfHeap; i++) {
+			if(heapArray[i].getElement().equals(element)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private void heapifyDown() {
@@ -99,7 +108,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>>{
 	}
 	
 	private void swap(int indexOne, int indexTwo) {
-		T temp = heapArray[indexOne];
+		Node<T> temp = heapArray[indexOne];
 		heapArray[indexOne] = heapArray[indexTwo];
 		heapArray[indexTwo] = temp;
 	}
@@ -120,7 +129,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>>{
 		return (index/2);
 	}
 	
-	private T getParent(int index) {
+	private Node<T> getParent(int index) {
 		return heapArray[getParentIndex(index)];
 	}
 	
@@ -130,5 +139,24 @@ public class BoundedPriorityQueue<T extends Comparable<T>>{
 	
 	private boolean hasRightChild(int index) {
 		return (getRightChildIndex(index) <= this.sizeOfHeap);
+	}
+	
+	private static class Node<T> implements Comparable<Node<T>> {
+		private Integer key;
+		private T element;
+		
+		public Node(T element, Integer key) {
+			this.element = element;
+			this.key = key;
+		}
+		
+		public T getElement() {
+			return element;
+		}
+		
+		@Override
+		public int compareTo(Node<T> node) {
+			return (this.key - node.key);
+		}
 	}
 }

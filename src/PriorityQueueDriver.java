@@ -15,17 +15,20 @@ public class PriorityQueueDriver {
 	public void run() {
 		
 		BoundedPriorityQueue<Integer> priorityQueue = new BoundedPriorityQueue<>(5);
-		priorityQueue.insert(10);
-		priorityQueue.insert(5);
-		priorityQueue.insert(25);
+		priorityQueue.insert(10, 1);
+		priorityQueue.insert(5, 1);
+		priorityQueue.insert(25, 1);
+		priorityQueue.insert(10, 1);
+		priorityQueue.insert(5, 1);
+		//priorityQueue.insert(25, 1);
 		
 		BoundedPriorityQueue<String> priorityQueueStrings = new BoundedPriorityQueue<>(10);
-		priorityQueueStrings.insert("HelloWorld");
-		priorityQueueStrings.insert("HelloWorldWorld");
-		priorityQueueStrings.insert("Hello");
+		priorityQueueStrings.insert("Hello1", 3);
+		priorityQueueStrings.insert("HelloWorldWorld", 2);
+		priorityQueueStrings.insert("Hello", 1);
 		
-		System.out.print(priorityQueue.min());
-		System.out.print(priorityQueueStrings.min());
+		System.out.println(priorityQueue.min());
+		System.out.println(priorityQueueStrings.min());
 		
 		
 	}
