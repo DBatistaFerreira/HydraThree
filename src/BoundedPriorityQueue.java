@@ -49,13 +49,12 @@ public class BoundedPriorityQueue<T>{
 			  "$this.sizeOfHeap == $old($this.sizeOfHeap) - 1"})
 	public T remove() {
 		T highestPriority = min();
-		
 		heapArray[1] = heapArray[sizeOfHeap];
 		heapArray[sizeOfHeap] = null;
 		sizeOfHeap--;
 		
 		heapifyDown();
-		
+		System.out.println(highestPriority);
 		return highestPriority; 
 	}
 	
