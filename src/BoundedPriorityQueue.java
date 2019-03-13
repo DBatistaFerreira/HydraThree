@@ -7,10 +7,13 @@ import be.ac.ua.ansymo.adbc.annotations.requires;
 			"$this.sizeOfHeap <= $this.boundCapacity"})
 public class BoundedPriorityQueue<T>{
 	
+	// Fields
+	
 	public int sizeOfHeap;
 	public int boundCapacity;
-	
 	public Node<T>[] heapArray;
+	
+	// Constructor
 	
 	@SuppressWarnings("unchecked")
 	@requires({"boundCapacity > 0"})
@@ -18,10 +21,12 @@ public class BoundedPriorityQueue<T>{
     		  "$this.boundCapacity > 0"})
 	public BoundedPriorityQueue(int boundCapacity) {
 		this.boundCapacity = boundCapacity;
-		this.heapArray = new Node[this.boundCapacity+1];
+		this.heapArray = new Node[this.boundCapacity + 1]; // The first index is reserved for swapping and heap operations.
 		this.sizeOfHeap = 0;
 	}
-
+	
+	// Interface Methods
+	
 	@requires({"newItem != null",
 			   "key != null",
 			   "$this.sizeOfHeap < $this.boundCapacity"})

@@ -67,7 +67,7 @@ public class PriorityQueueDriver {
 //				integerPQ3.insert(5, null);
 			//Uncomment this to fail the element being null precondition
 //				integerPQ3.insert(null, 5);
-			//Uncomment this to fail the bound capacity 
+			//Uncomment all 4 inserts to fail the bound capacity 
 //				integerPQ3.insert(1, 1);
 //				integerPQ3.insert(2, 2);
 //				integerPQ3.insert(3, 3);
