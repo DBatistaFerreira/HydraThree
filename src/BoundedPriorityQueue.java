@@ -54,7 +54,6 @@ public class BoundedPriorityQueue<T>{
 		sizeOfHeap--;
 		
 		heapifyDown();
-		System.out.println(highestPriority);
 		return highestPriority; 
 	}
 	

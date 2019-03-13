@@ -55,30 +55,37 @@ public class PriorityQueueDriver {
 					System.out.print(stringPQ.remove() + " -> ");
 				}
 			}
-			
 			System.out.println("\n--------------------------------------------------------------------------");
-			//Employee Priority Queue (Capacity of 3)
-			System.out.println("Creating a Employee Priority Queue and Setting their keys");
-			BoundedPriorityQueue<Employee> employeePQ = new BoundedPriorityQueue<>(3);
-			employeePQ.insert(new Employee("Bobby", 70000), 3);
-			employeePQ.insert(new Employee("Bob", 80000), 2);
-			employeePQ.insert(new Employee("Boberta", 90000), 1);
-
-			for(int i = 0; i < 3; i++) {
-				if(i == 2) {
-					System.out.print(employeePQ.remove().getName());
-				}
-				else {
-					System.out.print(employeePQ.remove().getName() + " -> ");
-				}
-			}
-		
+			
+		//Constructor Precondition Failures
+			//Uncomment this to fail the bound capacity precondition
+//				BoundedPriorityQueue<Integer> integerPQ2 = new BoundedPriorityQueue<>(-1);
+			
 		//Insert Precondition Failures
-		
+			BoundedPriorityQueue<Integer> integerPQ3 = new BoundedPriorityQueue<>(3);
+			//Uncomment this to fail the key being null precondition
+//				integerPQ3.insert(5, null);
+			//Uncomment this to fail the element being null precondition
+//				integerPQ3.insert(null, 5);
+			//Uncomment this to fail the bound capacity 
+//				integerPQ3.insert(1, 1);
+//				integerPQ3.insert(2, 2);
+//				integerPQ3.insert(3, 3);
+//				integerPQ3.insert(4, 4);
+			
 		//Min Precondition Failures 
-		
+			BoundedPriorityQueue<Integer> integerPQ4 = new BoundedPriorityQueue<>(3);
+			//Uncomment this to fail the size being equal to 0 precondition
+//				integerPQ4.min();
+			
 		//Remove Precondition Failures
-		
-		
+			BoundedPriorityQueue<Integer> integerPQ5 = new BoundedPriorityQueue<>(3);
+			//Uncomment this to fail the size being equal to 0 precondition
+//				integerPQ5.remove();
+			
+		//Contains Precondition Failures
+			BoundedPriorityQueue<Integer> integerPQ6 = new BoundedPriorityQueue<>(3);
+			//Uncomment this to fail the contains method being sent null
+//				integerPQ6.contains(null);
 	}
 }
