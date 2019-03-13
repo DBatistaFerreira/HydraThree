@@ -13,16 +13,6 @@ public class BoundedPriorityQueue<T>{
 	public Node<T>[] heapArray;
 	
 	@SuppressWarnings("unchecked")
-	@requires({"true"})
-	@ensures({"$this.heapArray != null",
-		      "$this.boundCapacity > 0"})
-	public BoundedPriorityQueue() {
-		this.boundCapacity = 10;
-		this.heapArray = new Node[this.boundCapacity+1];
-		this.sizeOfHeap = 0;
-	}
-	
-	@SuppressWarnings("unchecked")
 	@requires({"boundCapacity > 0"})
 	@ensures({"$this.heapArray != null",
     		  "$this.boundCapacity > 0"})
